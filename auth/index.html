@@ -31,42 +31,7 @@
     </div>
   </div>
 
-  <script>
-    // Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyDzVZ52Y1XL_Gw9PlQxQFhGBXOcWitm7gQ",
-      authDomain: "courierservicedb.firebaseapp.com",
-      databaseURL: "https://courierservicedb-default-rtdb.firebaseio.com",
-      projectId: "courierservicedb",
-      storageBucket: "courierservicedb.appspot.com",
-      messagingSenderId: "361882622021",
-      appId: "1:361882622021:web:209f03670c2b39392a6b2c",
-      measurementId: "G-N35XF5XX0N"
-    };
-
-    // Initialize Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-
-    // Login function
-    function login() {
-      const email = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-
-      // Firebase Authentication login
-      auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Successful login
-          alert("Login successful!");
-          window.location.href = "../index.html"; // Redirect to dashboard
-        })
-        .catch((error) => {
-          // Handle errors
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          alert(`Error: ${errorMessage}`);
-        });
-    }
+  <script src="../js/auth.js">
   </script>
 </body>
 </html>
