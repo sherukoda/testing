@@ -1,0 +1,79 @@
+/* Basic Styles for Profile Page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header h2 {
+    text-align: center;
+    color: #333;
+}
+
+.profile-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.profile-info p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+button {
+    padding: 8px 20px;
+    background-color: tomato;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgba(255, 99, 71, 0.528);
+}
+
+/* Editable Span Styling */
+[contenteditable="true"] {
+    display: inline-block;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    min-width: 200px;
+}
+
+[contenteditable="true"]:empty:before {
+    content: 'Edit';
+    color: #aaa;
+}
+
+/* Optional styles for disabled fields */
+button[disabled] {
+    background-color: #aaa;
+    cursor: not-allowed;
+}

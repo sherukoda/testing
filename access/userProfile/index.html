@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Update</title>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-database.js"></script> 
+    <!-- Realtime Database SDK -->
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            max-width: 1000px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        #profile {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        #profile img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        #profile p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        #profile h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        #profileEditForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #profileEditForm input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            background-color: #f9f9f9;
+        }
+
+        #profileEditForm button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: #fff;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #profileEditForm button:hover {
+            background-color: #0056b3;
+        }
+
+        .section-title {
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <nav>
+            <a class="companyName" href="../">Company <span>Name</span></a>
+
+            <span id="userUid"></span>
+            <button onclick="logout()">Logout</button>
+        </nav>
+    </section>
+
+<div class="container">
+    <h1>Profile Update</h1>
+    
+    <!-- Profile Display Section -->
+    <div id="profile">
+        <h2>User Profile</h2>
+        <img id="profileImage" src="default-avatar.jpg" alt="Profile Image">
+        <p id="userName">Name: </p>
+        <p id="userEmail">Email: </p>
+        <p id="userCompany">Company Name: </p>
+    </div>
+
+    <!-- Profile Edit Form Section -->
+    <div id="profileEditForm">
+        <h2 class="section-title">Edit Profile</h2>
+        <form id="profileForm" onsubmit="saveProfileChanges(event)">
+            <div class="form-section">
+                <label for="editName">Name</label>
+                <input type="text" id="editName" placeholder="Enter your name" required>
+            </div>
+            <div class="form-section">
+                <label for="editEmail">Email</label>
+                <input type="email" id="editEmail" placeholder="Enter your email" required>
+            </div>
+            <div class="form-section">
+                <label for="editCompany">Company Name</label>
+                <input type="text" id="editCompany" placeholder="Enter your Company Name" required>
+            </div>
+            <button type="submit">Save Changes</button>
+            <p class="error-message" id="error-message"></p>
+        </form>
+    </div>
+</div>
+
+<script>
+
+
+    // Function to clear the userUID cookie
+    function logout() {
+        // Set the cookie with the same name and a past expiration date to delete it
+        document.cookie = "userUID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        alert("User Logout Successfully!");
+        window.location.href = '../';
+      }
+      
+      
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDzVZ52Y1XL_Gw9PlQxQFhGBXOcWitm7gQ",
+        authDomain: "courierservicedb.firebaseapp.com",
+        databaseURL: "https://courierservicedb-default-rtdb.firebaseio.com",  // Realtime Database URL
+        projectId: "courierservicedb",
+        storageBucket: "courierservicedb.appspot.com",
+        messagingSenderId: "361882622021",
+        appId: "1:361882622021:web:209f03670c2b39392a6b2c",
+        measurementId: "G-N35XF5XX0N"
+    };
+
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database(); // Using Realtime Database
+
+    // Function to get cookies by name
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    // Function to handle profile updates and save them to Firebase Realtime Database
+    function saveProfileChanges(event) {
+        event.preventDefault(); // Prevent form submission and page reload
+
+        // Get updated profile data from the form
+        const updatedName = document.getElementById("editName").value;
+        const updatedEmail = document.getElementById("editEmail").value;
+        const updatedCompany = document.getElementById("editCompany").value;
+        const updatedImage = "";
+
+        // Validate fields before saving
+        if (!updatedName || !updatedEmail || !updatedCompany) {
+            document.getElementById("error-message").innerText = "All fields except Image URL are required.";
+            return;
+        }
+
+        // Update the profile page with the new data
+        document.getElementById("userName").innerText = `Name: ${updatedName}`;
+        document.getElementById("userEmail").innerText = `Email: ${updatedEmail}`;
+        document.getElementById("userCompany").innerText = `Company: ${updatedCompany}`;
+
+        // Assuming you have a user ID to uniquely identify the profile (e.g., userUID)
+        const userUID = getCookie('userUID');
+
+        // Prepare the updated profile data
+        const userProfile = {
+            name: updatedName,
+            email: updatedEmail,
+            company: updatedCompany,
+            profileImage: "default-avatar.jpg"
+        };
+
+        // Save the profile data to Realtime Database
+        database.ref('users/' + userUID + '/userProfile').set(userProfile)
+            .then(() => {
+                console.log("Profile updated successfully in Realtime Database!");
+                document.getElementById("error-message").innerText = "";
+            })
+            .catch((error) => {
+                console.error("Error updating profile in Realtime Database: ", error);
+                document.getElementById("error-message").innerText = "Error updating profile, please try again later.";
+            });
+    }
+
+    window.onload = function() {
+        // Fetch the user's data from Realtime Database
+        const userUID = getCookie('userUID');
+
+        database.ref('users/' + userUID + '/userProfile').once('value')
+            .then((snapshot) => {
+                const userProfile = snapshot.val();
+                if (userProfile) {
+                    document.getElementById("userName").innerText = `Name: ${userProfile.name}`;
+                    document.getElementById("userEmail").innerText = `Email: ${userProfile.email}`;
+                    document.getElementById("userCompany").innerText = `Company: ${userProfile.company}`;
+                    document.getElementById("profileImage").src =  "default-avatar.jpg";
+                } else {
+                    console.log("No user found with the given UID.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error getting user data: ", error);
+            });
+    };
+</script>
+
+</body>
+</html>
