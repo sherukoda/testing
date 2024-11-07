@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../styles/color.css">
+    <link rel="stylesheet" href="../styles/navbar.css">
+    <link rel="stylesheet" href="../styles/enterySection.css">
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script src="../scripts/key.js"></script>
+
+    <title>Drop-off Information</title>
+</head>
+
+<body>
+    <section>
+        <nav>
+            <a class="companyName" href="../index.html">Company <span>Name</span></a>
+            <ul>
+                <a href="../index.html">
+                    <li><i class="fa fa-home"></i>Home</li>
+                </a>
+                <a href="../dropOff/index.html">
+                    <li class="active"><i class="fa fa-truck"></i> Enter the Drop-off Information</li>
+                </a>
+                <a href="../dropOff/drop_off_list.html">
+                    <li><i class="fa fa-list"></i> Drop-off List</li>
+                </a>
+            </ul>
+        </nav>
+
+        <section class="enterySection">
+            <h2>Enter the Drop-off Information</h2>
+
+            <form id="dropOffForm">
+               
+
+                <fieldset>
+                    <legend>Recipient Information</legend>
+                    <label for="recipientName">Recipient Name:</label>
+                    <input type="text" id="recipientName" name="recipientName" required><br><br>
+
+                    <label for="recipientAddress">Recipient Address:</label>
+                    <textarea id="recipientAddress" name="recipientAddress" required></textarea><br><br>
+
+                    <label for="recipientPhone">Recipient Phone:</label>
+                    <input type="tel" id="recipientPhone" name="recipientPhone" required><br><br>
+                </fieldset>
+
+               
+                <fieldset id="feedbackForm" style="display: none;">
+                    <legend>Feedback Form</legend>
+                    <textarea id="feedback" name="feedback"></textarea><br><br>
+                </fieldset>
+
+                <button type="submit">Submit Drop-off</button>
+            </form>
+        </section>
+    </section>
+</body>
+<script src="../scripts/uploadDropOff.js"></script>
+
+</html>

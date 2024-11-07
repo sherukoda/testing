@@ -16,7 +16,7 @@
                 <span>LastMile</span>
             </div>
             <div class="login">
-                <a href="./auth/">Login</a>
+                <a id="action" href="./auth/">Login</a>
             </div>
         </div>
 
@@ -83,6 +83,25 @@
    
   </div>
 </body>
+
+<script>
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+  
+    // Assign a function to window.onload
+    window.onload = function() {
+      const userUID = getCookie('userUID');
+      if (userUID) {
+        const actionLink = document.getElementById('action');
+        actionLink.innerText = 'Dashboard';
+        actionLink.href = './access/index.html'; // Update href to dashboard
+      }
+    };
+  </script>
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const animateElements = document.querySelectorAll(".service-card, .feature-item");

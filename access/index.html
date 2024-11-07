@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+     <link rel="stylesheet" href="./styles/color.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/navbar.css">
+
+    <title>Courier</title>
+</head>
+<body>
+    <section>
+        <nav>
+            <a class="companyName" href="#">Company <span>Name</span></a>
+
+            <span id="userUid"></span>
+            <button onclick="logout()">Logout</button>
+        </nav>
+    </section>
+
+    <section class="wrapper">
+        <a href="./delivery/index.html" class="delivery">
+            <div class="container" title="Deliver the Package">
+                <img src="./images/delivers.png" alt="Courier delivering a parcel">
+                <h3>Delivery</h3>
+                <p>Courier delivers the parcel to the recipient.</p>
+            </div>
+        </a>
+
+        <a href="./dropOff/index.html" class="drop-off">
+            <div class="container" title="Receive the Package">
+                <img src="./images/drop-off.png" alt="Drop-off point for parcel">
+                <h3>Drop-off</h3>
+                <p>Sender hands over the parcel to the courier service.</p>
+            </div>
+
+        </a>
+    </section>
+</body>
+<script>
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    // Function to clear the userUID cookie
+    function logout() {
+      // Set the cookie with the same name and a past expiration date to delete it
+      document.cookie = "userUID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      alert("User Logout Successfully!");
+      window.location.href = '../auth/index.html';
+    }
+      
+    // Assign a function to window.onload
+    window.onload = function() {
+      if (!getCookie('userUID')) {
+        // Redirect to login page if userUID cookie is not present
+        window.location.href = '../auth/index.html';
+      } else {
+        // Usage example: Retrieve and log userUID
+        const userUID = getCookie('userUID');
+        document.getElementById('userUid').innerText = userUID;
+        console.log(userUID);
+      }
+    };
+  </script>
+  
+</html>

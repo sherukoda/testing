@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+    <script src="../scripts/fetchDeliveryInfo.js" defer></script>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="../styles/color.css" />
+    <link rel="stylesheet" href="../styles/navbar.css" />
+    <link rel="stylesheet" href="../styles/deliveryList.css" />
+    <title>Delivery List</title>
+  </head>
+
+  <body>
+    <section>
+      <nav>
+        <a class="companyName" href="../index.html"
+          >Company <span>Name</span></a
+        >
+        <ul>
+          <a href="../index.html">
+            <li><i class="fa fa-home"></i>Home</li>
+          </a>
+          <a href="../delivery/index.html">
+            <li><i class="fa fa-truck"></i> Enter the Delivery Information</li>
+          </a>
+          <a href="../delivery/deliveryList.html">
+            <li class="active"><i class="fa fa-list"></i> Delivery List</li>
+          </a>
+        </ul>
+      </nav>
+
+      <div class="deliveryList">
+        <h2>Delivery List</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Courier ID</th>
+              <th>Recipient Name</th>
+              <th>Recipient Phone</th>
+              <th>Delivery Address</th>
+              <th>Delivery Person</th>
+              <th>Delivery Status</th>
+              <th>More Details</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="deliveryTableBody">
+            <!-- Data will be populated dynamically -->
+          </tbody>
+        </table>
+      </div>
+
+      <div id="detailsModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('detailsModal')"
+            >&times;</span
+          >
+          <h2>Delivery Details</h2>
+          <br>
+          <p>
+            <strong>Courier ID:</strong> <span id="detailsCourierId"></span>
+          </p>
+          <hr><br>
+          <p>
+            <strong>Recipient Name:</strong>
+            <span id="detailsRecipientName"></span>
+          </p>
+          <p>
+            <strong>Recipient Phone:</strong>
+            <span id="detailsRecipientPhone"></span>
+          </p>
+          <p>
+            <strong>Recipient Address:</strong>
+            <span id="detailsRecipientAddress"></span>
+          </p>
+          <hr><br>
+          <p><strong>Status:</strong> <span id="detailsStatus"></span></p>
+          <p>
+            <strong>Created At:</strong> <span id="detailsCreatedAt"></span>
+          </p>
+          <p>
+            <strong>Updated At:</strong> <span id="detailsUpdatedAt"></span>
+          </p>
+        </div>
+      </div>
+
+      <div id="editModal" class="modal">
+        <div class="modal-content">
+          <span class="close" onclick="closeModal('editModal')">&times;</span>
+          <h2>Edit Delivery Information</h2>
+          <form id="editForm" onsubmit="saveNewDeliveryInfo(event)">
+            <input type="hidden" id="editRowIndex" />
+
+            <p>
+              <strong>Courier ID:</strong>
+              <input type="text" id="editCourierId" required />
+            </p>
+            <p>
+              <strong>Recipient Name:</strong>
+              <input type="text" id="editRecipientName" required />
+            </p>
+
+            <p>
+              <strong>Recipient Phone:</strong>
+              <input
+                type="tel"
+                id="editRecipientPhone"
+                required
+                pattern="[0-9]{10}"
+              />
+            </p>
+
+            <p>
+              <strong>Recipient Address:</strong>
+              <input type="text" id="editRecipientAddress" required />
+            </p>
+
+
+
+            <p>
+              <strong>Status:</strong>
+              <select id="editStatus" required>
+                <option value="Pending">Pending</option>
+                <option value="In-transit">In Transit</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </p>
+
+            <center>
+              <button type="submit">Save Changes</button>
+            </center>
+          </form>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

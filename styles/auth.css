@@ -8,7 +8,9 @@
     height: 100%;
   }
   
-  body {
+  .section {
+    height: calc(100vh - 80px);
+
     font-family: 'Rubik', sans-serif;
     display: flex;
     flex-direction: row;
@@ -17,7 +19,7 @@
   }
   
   @media (max-width: 860px) {
-    body {
+    .section {
       flex-direction: column;
     }
   }

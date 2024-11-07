@@ -10,8 +10,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-auth.js"></script>
+
+    <link rel="stylesheet" href="../access/styles/navbar.css">
+
+    <script src="../js/check.js"></script>
 </head>
 <body>
+
+  <section>
+    <nav>
+        <a class="companyName" href="../" style="color: tomato;font-size:30px">LastMile</a>
+    </nav>
+</section>
+<div class="section">
+
   <div class="left-container">
     <div class="image_section"></div>
   </div>
@@ -30,6 +42,24 @@
         <button class="btn" onclick="login()">Login</button>
     </div>
   </div>
+
+</div>
+
+  <script>
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+  
+    // Assign a function to window.onload
+    window.onload = function() {
+      if (getCookie('userUID')) {
+        window.location.href = "../access/index.html";
+      }
+    }
+  </script>
+  
 
   <script>
     // Firebase configuration
@@ -55,17 +85,29 @@
 
       // Firebase Authentication login
       auth.signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-          // Successful login
-          alert("Login successful!");
-          window.location.href = "../index.html"; // Redirect to dashboard
-        })
-        .catch((error) => {
-          // Handle errors
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          alert(`Error: ${errorMessage}`);
+      .then((userCredential) => {
+        // Successful login
+        alert("Login successful!");
+    
+        // Get the user ID and the ID token
+        const uid = userCredential.user.uid;
+    
+        userCredential.user.getIdToken().then((token) => {
+          // Create cookies with the UID and the token, valid for 7 days
+          document.cookie = `userUID=${uid}; path=/; max-age=${7 * 24 * 60 * 60}`;
+          document.cookie = `userToken=${token}; path=/; max-age=${7 * 24 * 60 * 60}`;
+    
+          // Redirect to the dashboard or another page
+          window.location.href = "../access/index.html";
         });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        alert(`Error: ${errorMessage}`);
+      });
+    
+    
     }
   </script>
 </body>

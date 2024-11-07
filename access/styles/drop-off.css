@@ -1,0 +1,31 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  width: 100%;
+  height: auto;
+}
+.dropOffList {
+  text-align: center;
+  margin-top: 20px;
+  width: 95%;
+  height: auto;
+  h2 {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    color: var(--dark-color);
+  }
+
+  th:nth-child(2), th:last-child {
+    min-width: 150px;
+  }
+  td {
+    max-width: 40px;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
