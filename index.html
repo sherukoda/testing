@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LastMile - Seamless Courier Integration</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+</head>
+<body>
+   
+  <div class="wrapper">
+    <div class="hero_section">
+        
+        <div class="navbar">
+            <div class="logo">
+                <span>LastMile</span>
+            </div>
+            <div class="login">
+                <a href="./auth/">Login</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="hero_text">
+                Connecting Couriers, Delivering Excellence
+                <div class="hero_par">
+                    "In today's tech-driven world, everything is just a click away, offering unparalleled convenience and the best experiences to customers. At Hyperlocal, we're on a mission to provide the fastest and most reliable doorstep pickup and drop-off service, ensuring that your customers enjoy seamless, efficient, and timely solutions right at their doorstep."
+                </div>
+                <div class="hero_button">
+                    <button><a href="#services">Learn More</a></button>
+                </div>
+            </div>
+        </div>
+      
+    </div>
+
+    <section id="services" class="services">
+        <h2>Our Services</h2>
+        <div class="service-cards">
+            <div class="service-card">
+                <h3>Doorstep Courier Integration</h3>
+                <p>Partner with trusted courier networks to streamline and oversee every delivery, from pickup to drop-off, right to your customer's door.</p>
+            </div>
+            <div class="service-card">
+                <h3>Real-Time Delivery Tracking</h3>
+                <p>Enable customers to follow their deliveries in real-time, providing transparency and assurance with each update.</p>
+            </div>
+            <div class="service-card">
+                <h3>Localized Area Distribution</h3>
+                <p>Optimize delivery routes by assigning couriers to specific areas, ensuring efficient and timely exchanges for faster service.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="features" class="features">
+        <h2>Our Features</h2>
+        <div class="feature-list">
+            <div class="feature-item">
+                <h3>Effortless Integrations</h3>
+                <p>Expand your delivery network effortlessly with our platform’s compatibility across multiple courier providers.</p>
+            </div>
+            <div class="feature-item">
+                <h3>Dedicated Support Team</h3>
+                <p>Receive consistent support from our team to keep your deliveries running smoothly and effectively.</p>
+            </div>
+            <div class="feature-item">
+                <h3>Insightful Data Analytics</h3>
+                <p>Access valuable analytics to fine-tune delivery operations, enhance efficiency, and elevate customer satisfaction.</p>
+            </div>
+        </div>
+    </section>
+    
+
+    <section id="contact" class="cta">
+        <h2>Ready to Streamline Your Deliveries?</h2>
+        <p>Join LastMile today and connect with the best courier partners for smooth and reliable logistics.</p>
+        <a href="mailto:vishalprajapatigk@gmail.com" class="cta-button">Get Started</a>
+        
+        <footer>
+            <p>© 2024 LastMile. All Rights Reserved.</p>
+        </footer>
+    </section>
+   
+  </div>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const animateElements = document.querySelectorAll(".service-card, .feature-item");
+
+        const observerOptions = {
+            root: null, // Viewport
+            threshold: 0.2 // Trigger when 20% of the element is visible
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("show"); // Add animation class
+                } else {
+                    entry.target.classList.remove("show"); // Remove class when out of view
+                }
+            });
+        }, observerOptions);
+
+        animateElements.forEach(element => observer.observe(element));
+    });
+</script>
+</html>
